@@ -45,12 +45,6 @@ Chart.defaults.borderColor = "#334155"; // Dark grid lines
 Chart.defaults.elements.point.radius = 0; // Hide points on dense time series
 
 const ASSET_COLORS = {
-    'NIFTY_50': '#10b981', // Green
-    'SP_500': '#3b82f6', // Blue
-    'NASDAQ_100': '#8b5cf6', // Purple
-    'Brent_Crude': '#f59e0b', // Orange
-    'Gold': '#eab308', // Yellow
-    'USD_INR': '#ef4444', // Red
     'NIFTY_50': '#38bdf8', // Neon Sky Blue (Primary)
     'SP_500': '#34d399', // Neon Emerald
     'Gold': '#fbbf24', // Bright Gold
@@ -81,12 +75,12 @@ let rollingCorrChartInstance = null;
 async function fetchData() {
     try {
         const [descStats, corrData, rollCorr, normPerf, advResearch, mlResults] = await Promise.all([
-            fetch('/api/stats/descriptive_stats').then(r => r.json()),
-            fetch('/api/stats/correlation_matrix').then(r => r.json()),
-            fetch('/api/stats/rolling_correlations').then(r => r.json()),
-            fetch('/api/stats/normalized_performance').then(r => r.json()),
-            fetch('/api/stats/advanced_research').then(r => r.json()),
-            fetch('/api/stats/ml_results').then(r => r.json())
+            fetch('/data/stats/descriptive_stats.json').then(r => r.json()),
+            fetch('/data/stats/correlation_matrix.json').then(r => r.json()),
+            fetch('/data/stats/rolling_correlations.json').then(r => r.json()),
+            fetch('/data/stats/normalized_performance.json').then(r => r.json()),
+            fetch('/data/stats/advanced_research.json').then(r => r.json()),
+            fetch('/data/stats/ml_results.json').then(r => r.json())
         ]);
         
         globalRollingCorrData = rollCorr;

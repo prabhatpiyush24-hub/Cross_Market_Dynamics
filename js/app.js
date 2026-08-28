@@ -197,7 +197,8 @@ function renderCorrelationMatrix(data) {
                 let sigMarker = '';
                 if (pval < 0.01) sigMarker = '*';
                 
-                tbody += `<td class="${valClass}" title="p-value: ${pval.toExponential(2)}">${corr.toFixed(2)}${sigMarker}</td>`;
+                const displayPval = pval < 0.0001 ? '< 0.0001' : pval.toFixed(4);
+                tbody += `<td class="${valClass}" title="p-value: ${displayPval}">${corr.toFixed(2)}${sigMarker}</td>`;
             }
         });
         tbody += `</tr>`;
@@ -295,7 +296,7 @@ function renderRollingCorrChart() {
 function renderRegression(regData) {
     document.getElementById('reg-obs').textContent = regData.observations.toLocaleString();
     document.getElementById('reg-rsq').textContent = regData.rsquared.toFixed(3);
-    document.getElementById('reg-pval').textContent = regData.f_pvalue < 0.0001 ? '< 0.0001' : regData.f_pvalue.toExponential(2);
+    document.getElementById('reg-pval').textContent = regData.f_pvalue < 0.0001 ? '< 0.0001' : regData.f_pvalue.toFixed(4);
 
     const tbody = document.querySelector('#regressionTable tbody');
     tbody.innerHTML = '';
@@ -310,12 +311,14 @@ function renderRegression(regData) {
         if (stats.p_value < 0.01) { sigClass = 'sig-high'; sigText = 'High Sig.'; }
         else if (stats.p_value < 0.05) { sigClass = 'sig-low'; sigText = 'Significant'; }
         
+        const displayPval = stats.p_value < 0.0001 ? '< 0.0001' : stats.p_value.toFixed(4);
+        
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><strong>${FRIENDLY_NAMES[varName] || varName}</strong></td>
             <td>${stats.coefficient.toFixed(4)}</td>
             <td>${stats.std_error.toFixed(4)}</td>
-            <td>${stats.p_value.toExponential(2)}</td>
+            <td>${displayPval}</td>
             <td>${stats.conf_int_lower.toFixed(4)}</td>
             <td>${stats.conf_int_upper.toFixed(4)}</td>
             <td><span class="${sigClass}">${sigText}</span></td>

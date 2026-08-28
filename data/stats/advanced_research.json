@@ -1,0 +1,109 @@
+{
+    "regime_analysis": {
+        "Low Volatility (Bottom 25%)": {
+            "observations": 654,
+            "avg_nifty_return_annualized": 0.3111390215614457,
+            "nifty_volatility_annualized": 0.08690421209723685,
+            "correlations": {
+                "SP_500": 0.2867749309024343,
+                "Brent_Crude": -0.0071121240492556135,
+                "Gold": 0.013021316066578848,
+                "USD_INR": -0.05706024229403843
+            }
+        },
+        "Normal Volatility (Middle 50%)": {
+            "observations": 1299,
+            "avg_nifty_return_annualized": 0.13802882754234475,
+            "nifty_volatility_annualized": 0.1251864176594848,
+            "correlations": {
+                "SP_500": 0.22301334066104092,
+                "Brent_Crude": 0.018776723045892525,
+                "Gold": 0.06126102279721206,
+                "USD_INR": -0.0012930960018579258
+            }
+        },
+        "High Volatility (Top 25%)": {
+            "observations": 653,
+            "avg_nifty_return_annualized": -0.0970596160574335,
+            "nifty_volatility_annualized": 0.25775727968484186,
+            "correlations": {
+                "SP_500": 0.31259499020001746,
+                "Brent_Crude": 0.07753160670294547,
+                "Gold": 0.11618011184694457,
+                "USD_INR": 0.059560978874457285
+            }
+        }
+    },
+    "regression_analysis": {
+        "rsquared": 0.09802560546652495,
+        "rsquared_adj": 0.09559440763759386,
+        "f_pvalue": 3.708692719951137e-54,
+        "observations": 2605,
+        "variables": {
+            "const": {
+                "coefficient": 0.0003670923177212665,
+                "std_error": 0.00019209554692783406,
+                "t_stat": 1.9109881701691647,
+                "p_value": 0.05611608947849358,
+                "conf_int_lower": -9.583589019758173e-06,
+                "conf_int_upper": 0.0007437682244622912
+            },
+            "SP_500": {
+                "coefficient": 0.34424590995692983,
+                "std_error": 0.04914005092041703,
+                "t_stat": 7.005404013814326,
+                "p_value": 3.125265749908313e-12,
+                "conf_int_lower": 0.2478882716161413,
+                "conf_int_upper": 0.44060354829771836
+            },
+            "NASDAQ_100": {
+                "coefficient": -0.049081572055891184,
+                "std_error": 0.03794352852634729,
+                "t_stat": -1.2935426398683465,
+                "p_value": 0.19593848484288615,
+                "conf_int_lower": -0.12348419742224148,
+                "conf_int_upper": 0.025321053310459113
+            },
+            "Brent_Crude": {
+                "coefficient": -0.0026225703457928976,
+                "std_error": 0.007475157069566968,
+                "t_stat": -0.35083815916992117,
+                "p_value": 0.725738223930689,
+                "conf_int_lower": -0.017280440412237058,
+                "conf_int_upper": 0.012035299720651264
+            },
+            "Gold": {
+                "coefficient": 0.06103177161851939,
+                "std_error": 0.01789043596499064,
+                "t_stat": 3.4114189133205577,
+                "p_value": 0.0006561415901454416,
+                "conf_int_lower": 0.02595081166458179,
+                "conf_int_upper": 0.09611273157245698
+            },
+            "USD_INR": {
+                "coefficient": 0.004724766968102522,
+                "std_error": 0.05076431145761574,
+                "t_stat": 0.093072610116013,
+                "p_value": 0.925853056087702,
+                "conf_int_lower": -0.09481784791388007,
+                "conf_int_upper": 0.1042673818500851
+            },
+            "Prev_NIFTY_50": {
+                "coefficient": -0.1331996800021795,
+                "std_error": 0.02336344601877475,
+                "t_stat": -5.701200066768442,
+                "p_value": 1.3240289792017465e-08,
+                "conf_int_lower": -0.17901254424844487,
+                "conf_int_upper": -0.08738681575591412
+            },
+            "Prev_India_VIX_Change": {
+                "coefficient": -0.00615548246205459,
+                "std_error": 0.0042825723612142505,
+                "t_stat": -1.437332972538334,
+                "p_value": 0.15074387420689686,
+                "conf_int_lower": -0.014553083828370748,
+                "conf_int_upper": 0.002242118904261567
+            }
+        }
+    }
+}

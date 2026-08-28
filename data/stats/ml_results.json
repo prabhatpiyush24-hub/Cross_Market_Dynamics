@@ -1,0 +1,59 @@
+{
+    "audit": {
+        "leakage_free": true,
+        "train_samples": 2084,
+        "test_samples": 521,
+        "train_period": "2016-01-07 to 2024-07-16",
+        "test_period": "2024-07-18 to 2026-08-27"
+    },
+    "models": {
+        "Baseline": {
+            "accuracy": 0.4971209213051823,
+            "precision": 0.4971209213051823,
+            "recall": 1.0,
+            "f1": 0.6641025641025641,
+            "roc_auc": 0.5,
+            "confusion_matrix": {
+                "tn": 0,
+                "fp": 262,
+                "fn": 0,
+                "tp": 259
+            }
+        },
+        "Logistic_Regression": {
+            "accuracy": 0.4971209213051823,
+            "precision": 0.49705304518664045,
+            "recall": 0.9768339768339769,
+            "f1": 0.6588541666666666,
+            "roc_auc": 0.5542898405493826,
+            "confusion_matrix": {
+                "tn": 6,
+                "fp": 256,
+                "fn": 6,
+                "tp": 253
+            }
+        },
+        "Random_Forest": {
+            "accuracy": 0.5393474088291746,
+            "precision": 0.5256064690026954,
+            "recall": 0.752895752895753,
+            "f1": 0.6190476190476191,
+            "roc_auc": 0.5969082495800053,
+            "confusion_matrix": {
+                "tn": 86,
+                "fp": 176,
+                "fn": 64,
+                "tp": 195
+            }
+        }
+    },
+    "feature_importance": {
+        "SP_500": 0.2915657375465064,
+        "NASDAQ_100": 0.25947473026898343,
+        "Brent_Crude": 0.07804064159820251,
+        "Gold": 0.10188639013060508,
+        "USD_INR": 0.06983723516997094,
+        "Prev_NIFTY_50": 0.1074838201271614,
+        "Prev_India_VIX": 0.09171144515857033
+    }
+}

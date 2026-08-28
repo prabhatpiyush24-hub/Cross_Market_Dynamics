@@ -1,0 +1,100 @@
+{
+    "status": "success",
+    "warnings": [
+        "India_VIX has 26 suspicious price jumps (>20%).",
+        "US_VIX has 73 suspicious price jumps (>20%).",
+        "Brent_Crude has 3 suspicious price jumps (>20%)."
+    ],
+    "datasets": {
+        "NIFTY_50": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2625,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 155
+        },
+        "India_VIX": {
+            "first_available_date": "2016-01-01",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2612,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 26,
+            "missing_business_days": 168
+        },
+        "SP_500": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2678,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 101
+        },
+        "NASDAQ_100": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2678,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 101
+        },
+        "US_VIX": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2679,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 73,
+            "missing_business_days": 100
+        },
+        "Brent_Crude": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2679,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 3,
+            "missing_business_days": 100
+        },
+        "Gold": {
+            "first_available_date": "2016-01-04",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2677,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 102
+        },
+        "USD_INR": {
+            "first_available_date": "2016-01-01",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2772,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 8
+        },
+        "NIFTY_IT": {
+            "first_available_date": "2016-01-01",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2628,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 152
+        },
+        "NIFTY_Bank": {
+            "first_available_date": "2016-01-01",
+            "last_available_date": "2026-08-27",
+            "number_of_observations": 2628,
+            "missing_prices": 0,
+            "invalid_prices": 0,
+            "suspicious_jumps": 0,
+            "missing_business_days": 152
+        }
+    }
+}

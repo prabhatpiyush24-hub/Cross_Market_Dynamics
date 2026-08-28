@@ -1,0 +1,33 @@
+{
+    "start_date": "2016-01-05",
+    "end_date": "2026-08-27",
+    "total_observations": 2607,
+    "methodology": {
+        "anchor": "NIFTY_50",
+        "same_day_alignment": [
+            "India_VIX",
+            "NIFTY_IT",
+            "NIFTY_Bank"
+        ],
+        "strictly_prior_alignment": [
+            "SP_500",
+            "NASDAQ_100",
+            "US_VIX",
+            "Brent_Crude",
+            "Gold",
+            "USD_INR"
+        ]
+    },
+    "columns": [
+        "NIFTY_50",
+        "India_VIX",
+        "NIFTY_IT",
+        "NIFTY_Bank",
+        "SP_500",
+        "NASDAQ_100",
+        "US_VIX",
+        "Brent_Crude",
+        "Gold",
+        "USD_INR"
+    ]
+}

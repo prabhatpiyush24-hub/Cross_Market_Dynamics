@@ -57,7 +57,7 @@
                 <section id="abstract" class="research-section">
                     <div class="section-heading">
                         <h2>Abstract & Methodology</h2>
-                        <span class="badge">Peer-Review Standard</span>
+                        <span class="badge">Empirical Research Framework</span>
                     </div>
                     
                     <div class="content-block">
@@ -65,14 +65,58 @@
                         <p>This empirical research study investigates the historical behavior of Indian equities (NIFTY 50) in relation to global equity markets (S&P 500, NASDAQ-100), commodities (Brent Crude, Gold), currency (USD/INR), and volatility (India VIX) over a 10-year period.</p>
                         <p>By employing a strict data alignment methodology to eliminate look-ahead bias, we answer fundamental questions regarding cross-market correlations, the impact of market stress regimes, and the predictive power of global factors on daily Indian market returns.</p>
                         
+                        <h3>Research Questions & Hypotheses</h3>
+                        <div class="methodology-card" style="margin-bottom: 2rem;">
+                            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <li><strong>H1:</strong> Previous-session US equity returns have a statistically significant association with subsequent NIFTY returns.</li>
+                                <li><strong>H2:</strong> Previous-session Brent returns have a statistically significant association with subsequent NIFTY returns.</li>
+                                <li><strong>H3:</strong> Cross-market relationships differ between low-, normal- and high-volatility regimes.</li>
+                                <li><strong>H4:</strong> Global-market variables improve out-of-sample NIFTY directional classification relative to a simple baseline.</li>
+                            </ul>
+                        </div>
+
                         <h3>Data Alignment Methodology</h3>
-                        <div class="methodology-card">
+                        <div class="methodology-card" style="margin-bottom: 2rem;">
                             <h4>Strictly-Lagged Alignment (No Look-Ahead Bias)</h4>
                             <p>Global markets (US Equities, Commodities) trade in different timezones and often close after the Indian market. To simulate realistic predictive environments, <strong>all global variables are aligned to the most recently completed session strictly prior to the Indian market open</strong>.</p>
                             <ul>
                                 <li><strong>Target Anchor:</strong> NIFTY 50 daily session.</li>
                                 <li><strong>Global Predictors:</strong> S&P 500, NASDAQ, Brent, Gold, USD/INR (Lagged).</li>
-                                <li><strong>Returns Calculation:</strong> Logarithmic/Percentage daily returns derived from Adjusted Close prices.</li>
+                                <li><strong>Returns Calculation:</strong> Logarithmic/Percentage daily returns derived from the specified pricing field.</li>
+                            </ul>
+                        </div>
+
+                        <h3>Dataset Properties</h3>
+                        <div class="table-container" style="margin-bottom: 2rem;">
+                            <table id="datasetTable" class="research-table">
+                                <thead>
+                                    <tr>
+                                        <th>Asset</th>
+                                        <th>Source</th>
+                                        <th>Ticker</th>
+                                        <th>Field Used</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Observations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Research Limitations</h3>
+                        <div class="methodology-card">
+                            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                                <li>Correlation does not establish causation.</li>
+                                <li>Daily data may miss intraday relationships.</li>
+                                <li>Different market hours and holidays can affect lead/lag results.</li>
+                                <li>Market relationships can change over time.</li>
+                                <li>Statistical significance does not necessarily imply economic significance.</li>
+                                <li>Historical relationships do not guarantee future behaviour.</li>
+                                <li>ML performance depends on the selected sample and methodology.</li>
+                                <li>Different data providers can produce small differences in historical observations.</li>
                             </ul>
                         </div>
                     </div>
@@ -95,7 +139,7 @@
                             <div class="formula-card">
                                 <h4>Daily Returns (Simple)</h4>
                                 <div class="math-block">R<sub>t</sub> = (P<sub>t</sub> - P<sub>t-1</sub>) / P<sub>t-1</sub></div>
-                                <p>Used to calculate the percentage change between the Adjusted Close prices of consecutive trading days.</p>
+                                <p>Used to calculate the percentage change between the prices of consecutive trading days.</p>
                             </div>
                             
                             <div class="formula-card">
@@ -150,10 +194,10 @@
                             <div class="ai-header"><i data-lucide="info"></i> How to read these metrics</div>
                             <div class="ai-body">
                                 <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <li><strong>Annualized Return:</strong> The expected yearly percentage growth if the daily average compounded over 252 trading days.</li>
-                                    <li><strong>Annualized Volatility:</strong> The "risk" or standard deviation. Higher volatility means wilder price swings.</li>
-                                    <li><strong>Skewness:</strong> Shows if returns lean positive or negative. A negative skew (like the S&P 500) means the market grinds up slowly but crashes violently.</li>
-                                    <li><strong>Kurtosis:</strong> Measures "fat tails". A normal bell curve has a kurtosis of 3. Values higher than 3 (like NIFTY's 14+) prove that extreme stock market crashes happen far more often than normal math predicts.</li>
+                                    <li><strong>Annualized Mean Return:</strong> The average daily return scaled to a full year (252 days). Note: This differs from historical CAGR.</li>
+                                    <li><strong>Annualized Volatility:</strong> The standard deviation scaled to a full year.</li>
+                                    <li><strong>Skewness:</strong> Shows if returns lean positive or negative. A negative skew means negative returns are more extreme on average than positive returns.</li>
+                                    <li><strong>Excess Kurtosis:</strong> Positive excess kurtosis indicates heavier tails relative to a normal distribution (where excess kurtosis is 0), meaning extreme observations occur more frequently than would be expected under a normal distribution.</li>
                                     <li><strong>5th/95th Pctl:</strong> On the worst 5% of days, the asset falls by at least this amount. On the best 5% of days, it rises by this amount.</li>
                                 </ul>
                             </div>
@@ -164,10 +208,10 @@
                                 <thead>
                                     <tr>
                                         <th>Asset</th>
-                                        <th>Annualized Return <span class="help-icon" data-tooltip="Average daily return scaled to a full year (252 days)">?</span></th>
+                                        <th>Annualized Mean Return <span class="help-icon" data-tooltip="Average daily return scaled to a full year (252 days)">?</span></th>
                                         <th>Annualized Volatility <span class="help-icon" data-tooltip="Standard deviation scaled to a full year. Measures risk.">?</span></th>
                                         <th>Skewness <span class="help-icon" data-tooltip="Negative means crashes are sharper than rallies.">?</span></th>
-                                        <th>Kurtosis <span class="help-icon" data-tooltip="Above 3 indicates 'fat tails' (extreme events are common).">?</span></th>
+                                        <th>Excess Kurtosis <span class="help-icon" data-tooltip="Positive indicates 'fat tails' (extreme events are more common than normal distribution).">?</span></th>
                                         <th>5th Pctl (Daily) <span class="help-icon" data-tooltip="The 5% worst days fall by at least this much.">?</span></th>
                                         <th>95th Pctl (Daily) <span class="help-icon" data-tooltip="The 5% best days rise by at least this much.">?</span></th>
                                     </tr>
@@ -193,9 +237,9 @@
                             <div class="ai-header"><i data-lucide="sparkles"></i> Key Correlation Findings</div>
                             <div class="ai-body">
                                 <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <li><strong>The US Leads India:</strong> The highly significant (p < 0.01) positive relationship between the <em>previous</em> US session (S&P 500) and the <em>current</em> NIFTY session proves the Indian market heavily follows Wall Street's overnight lead.</li>
-                                    <li><strong>The USD/INR Myth:</strong> While financial media claims Rupee depreciation causes NIFTY crashes, the actual 10-year lagged correlation is +0.021 with a p-value of 0.275 (Not Statistically Significant). The previous day's currency move provides zero predictive value.</li>
-                                    <li><strong>What is a p-value?:</strong> The asterisks (*) denote a p-value < 0.01. This means there is less than a 1% probability that this relationship is just a random coincidence.</li>
+                                    <li><strong>US and India:</strong> Previous-session S&P 500 returns exhibit a statistically significant positive association with subsequent NIFTY returns over the sample period. This relationship indicates statistical association, not causation.</li>
+                                    <li><strong>USD/INR Relationship:</strong> We examine the historical association between USD/INR returns and NIFTY returns. The 10-year lagged correlation is +0.021 with a p-value of 0.275 (Not Statistically Significant).</li>
+                                    <li><strong>What is a p-value?:</strong> A p-value measures how incompatible the observed result is with the null hypothesis. A small p-value provides evidence against the null hypothesis, but it does not represent the probability that the finding is random or that the alternative hypothesis is true.</li>
                                 </ul>
                             </div>
                         </div>
@@ -238,26 +282,29 @@
                         <div class="regression-summary">
                             <div class="reg-stat" title="Total number of daily sessions analyzed">
                                 <span class="reg-label">Observations <span class="help-icon" data-tooltip="Total trading days in the dataset.">?</span></span>
-                                <span class="reg-val">2,605</span>
+                                <span class="reg-val" id="reg-obs">--</span>
                             </div>
                             <div class="reg-stat" title="How much of the NIFTY's movement is explained by these variables">
-                                <span class="reg-label">R-Squared <span class="help-icon" data-tooltip="Explains ~10% of NIFTY's daily variance using ONLY prior day data. This is considered very high for daily stock market prediction.">?</span></span>
-                                <span class="reg-val">0.098</span>
+                                <span class="reg-label">R-Squared <span class="help-icon" data-tooltip="Percentage of variance in NIFTY returns explained by the model predictors.">?</span></span>
+                                <span class="reg-val" id="reg-rsq">--</span>
                             </div>
                             <div class="reg-stat">
-                                <span class="reg-label">F-Statistic p-value <span class="help-icon" data-tooltip="Probability that the entire model is useless. < 0.0001 means the model is highly valid.">?</span></span>
-                                <span class="reg-val">< 0.0001</span>
+                                <span class="reg-label">F-Statistic p-value</span>
+                                <span class="reg-val" id="reg-pval">--</span>
                             </div>
                         </div>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary);">The model explains approximately 9.8% of the variation in NIFTY returns within the sample. Daily financial returns are noisy, so statistically significant relationships can coexist with relatively modest explanatory power.</p>
 
                         <div class="table-container mt-4">
                             <table class="research-table" id="regressionTable">
                                 <thead>
                                     <tr>
                                         <th>Predictor (Prior Session)</th>
-                                        <th>Coefficient <span class="help-icon" data-tooltip="If this predictor goes up 1%, the NIFTY is expected to go up by this amount (holding others constant).">?</span></th>
-                                        <th>T-Statistic <span class="help-icon" data-tooltip="Signal-to-noise ratio. Values > 2 or < -2 are usually significant.">?</span></th>
-                                        <th>P-Value <span class="help-icon" data-tooltip="Probability this finding is just random noise. Lower is better.">?</span></th>
+                                        <th>Coefficient <span class="help-icon" data-tooltip="Estimated change in NIFTY return associated with a 1 unit increase in the predictor, holding others constant.">?</span></th>
+                                        <th>Std. Error</th>
+                                        <th>P-Value</th>
+                                        <th>95% CI Lower</th>
+                                        <th>95% CI Upper</th>
                                         <th>Significance</th>
                                     </tr>
                                 </thead>
@@ -271,9 +318,9 @@
                             <div class="ai-header"><i data-lucide="sparkles"></i> Regression Conclusions</div>
                             <div class="ai-body">
                                 <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <li><strong>The S&P 500 Dominates:</strong> A coefficient of +0.344 means that for every 1% the S&P 500 rises overnight, the NIFTY is expected to open and rise 0.34% the next day, holding all else constant.</li>
-                                    <li><strong>Mean Reversion Confirmed:</strong> The highly significant negative coefficient (-0.133) for the previous day's NIFTY return indicates a mean-reverting characteristic. A strong up-day mathematically predicts a slight pullback the following day.</li>
-                                    <li><strong>Commodities Muted:</strong> Once the S&P 500 is factored in, Brent Crude and USD/INR offer no additional daily predictive power (Not Significant).</li>
+                                    <li><strong>S&P 500 Predictor:</strong> The S&P 500 has the largest estimated coefficient among the included predictors in this regression specification. A 1 percentage-point increase in the previous-session S&P 500 return is associated with an estimated +0.34 percentage-point change in the subsequent NIFTY return, holding the other variables constant. Note that coefficient magnitude depends on variable scaling.</li>
+                                    <li><strong>Reversal Dynamics:</strong> The negative coefficient on the previous NIFTY return is consistent with short-term reversal in this regression specification.</li>
+                                    <li><strong>Commodities:</strong> We test the historical relationship between Brent crude returns and subsequent NIFTY returns, and whether gold exhibits defensive or inverse behaviour. In this specification, their coefficients are relatively small compared to their standard errors.</li>
                                 </ul>
                             </div>
                         </div>
@@ -286,7 +333,7 @@
                         <h2>Market Regimes (Volatility Impact)</h2>
                     </div>
                     <div class="content-block">
-                        <p>Does the relationship between global markets change during a panic? We segmented the dataset into three regimes based on the <strong>India VIX</strong> (Volatility Index) percentiles to see how the NIFTY behaves during calm vs. fearful periods.</p>
+                        <p>We segmented the dataset into three regimes based on the <strong>India VIX</strong> (Volatility Index) percentiles to see how the NIFTY behaves during calm vs. higher-volatility periods.</p>
                         
                         <div class="regime-cards" id="regimeCardsContainer">
                             <!-- Populated by JS -->
@@ -300,22 +347,22 @@
                         <h2>Machine Learning Experiment</h2>
                     </div>
                     <div class="content-block">
-                        <p>Given the statistically significant linear relationships discovered above, we tested whether Machine Learning algorithms can predict the <strong>Direction</strong> (Positive vs. Non-Positive) of the next NIFTY 50 session using <em>only</em> out-of-sample data (2024-2026).</p>
+                        <p>Given the statistically significant linear relationships discovered above, we tested whether Machine Learning algorithms can classify the <strong>Direction</strong> (Positive vs. Non-Positive) of the next NIFTY 50 session using out-of-sample chronological data (2024-2026).</p>
                         
                         <div class="ai-insight-box">
                             <div class="ai-header"><i data-lucide="info"></i> Understanding ML Metrics</div>
                             <div class="ai-body">
                                 <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <li><strong>Accuracy:</strong> Percentage of days the model guessed the direction correctly. Anything above 52-53% is considered a massive edge in daily financial markets.</li>
-                                    <li><strong>ROC-AUC:</strong> Area Under the Receiver Operating Characteristic Curve. A score of 0.500 means random guessing. 1.000 means perfect prediction. Our Random Forest achieves ~0.597, proving it has learned real patterns beyond random chance.</li>
-                                    <li><strong>Feature Importance:</strong> Shows which variables the Random Forest relied on most. Notice how the US Markets (S&P 500 & NASDAQ) contribute over 50% of the predictive power!</li>
+                                    <li><strong>Accuracy:</strong> Percentage of days the model guessed the direction correctly. </li>
+                                    <li><strong>ROC-AUC:</strong> Area Under the Receiver Operating Characteristic Curve. A score of 0.500 means no discrimination. Our model achieved an out-of-sample ROC-AUC of approximately 0.597, indicating modest discrimination above the 0.50 benchmark. Further robustness testing is required to determine whether this improvement is stable and economically meaningful.</li>
+                                    <li><strong>Feature Importance:</strong> Displays which variables the Random Forest relied on most heavily for its classifications within the training sample.</li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="ml-grid">
                             <div class="ml-results-card">
-                                <h3>Test Set Performance (2024-2026)</h3>
+                                <h3>Test Set Performance (Chronological Split)</h3>
                                 <ul id="mlPerformanceList">
                                     <!-- Populated by JS -->
                                 </ul>

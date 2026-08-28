@@ -74,18 +74,20 @@ let rollingCorrChartInstance = null;
 
 async function fetchData() {
     try {
-        const [descStats, corrData, rollCorr, normPerf, advResearch, mlResults] = await Promise.all([
+        const [descStats, corrData, rollCorr, normPerf, advResearch, mlResults, alignSummary] = await Promise.all([
             fetch('/data/stats/descriptive_stats.json').then(r => r.json()),
             fetch('/data/stats/correlation_matrix.json').then(r => r.json()),
             fetch('/data/stats/rolling_correlations.json').then(r => r.json()),
             fetch('/data/stats/normalized_performance.json').then(r => r.json()),
             fetch('/data/stats/advanced_research.json').then(r => r.json()),
-            fetch('/data/stats/ml_results.json').then(r => r.json())
+            fetch('/data/stats/ml_results.json').then(r => r.json()),
+            fetch('/data/final/alignment_summary.json').then(r => r.json())
         ]);
         
         globalRollingCorrData = rollCorr;
 
-        updateSidebarInfo(corrData.observations);
+        updateSidebarInfo(alignSummary);
+        renderDatasetTable(alignSummary);
         renderDescriptiveStats(descStats);
         renderCorrelationMatrix(corrData);
         renderHistoricalChart(normPerf);
@@ -102,9 +104,34 @@ async function fetchData() {
     }
 }
 
-function updateSidebarInfo(obs) {
-    document.getElementById('stat-obs').textContent = obs;
-    document.getElementById('stat-period').textContent = "Jan 2016 – Aug 2026";
+function updateSidebarInfo(data) {
+    document.getElementById('stat-obs').textContent = data.total_observations.toLocaleString();
+    const start = new Date(data.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    const end = new Date(data.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    document.getElementById('stat-period').textContent = `${start} – ${end}`;
+}
+
+function renderDatasetTable(data) {
+    const tbody = document.querySelector('#datasetTable tbody');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    const metadata = data.dataset_metadata;
+    const order = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Brent_Crude', 'Gold', 'USD_INR', 'India_VIX', 'US_VIX', 'NIFTY_IT', 'NIFTY_Bank'];
+    order.forEach(asset => {
+        if (!metadata[asset]) return;
+        const info = metadata[asset];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${FRIENDLY_NAMES[asset] || asset}</strong></td>
+            <td>${info.source}</td>
+            <td>${info.ticker}</td>
+            <td>${info.field_used}</td>
+            <td>${info.start_date}</td>
+            <td>${info.end_date}</td>
+            <td>${info.observations.toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+    });
 }
 
 function renderDescriptiveStats(data) {
@@ -119,7 +146,7 @@ function renderDescriptiveStats(data) {
         if (!daily[asset]) return;
         const stats = daily[asset];
         
-        const annRet = (stats.annualized_return * 100).toFixed(1) + '%';
+        const annRet = (stats.annualized_mean_return * 100).toFixed(1) + '%';
         const annVol = (stats.annualized_volatility * 100).toFixed(1) + '%';
         const skew = stats.skewness.toFixed(2);
         const kurt = stats.kurtosis.toFixed(2);
@@ -129,7 +156,7 @@ function renderDescriptiveStats(data) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><strong>${FRIENDLY_NAMES[asset] || asset}</strong></td>
-            <td class="${stats.annualized_return > 0 ? 'positive' : 'negative'}">${annRet}</td>
+            <td class="${stats.annualized_mean_return > 0 ? 'positive' : 'negative'}">${annRet}</td>
             <td>${annVol}</td>
             <td>${skew}</td>
             <td>${kurt}</td>
@@ -266,6 +293,10 @@ function renderRollingCorrChart() {
 }
 
 function renderRegression(regData) {
+    document.getElementById('reg-obs').textContent = regData.observations.toLocaleString();
+    document.getElementById('reg-rsq').textContent = regData.rsquared.toFixed(3);
+    document.getElementById('reg-pval').textContent = regData.f_pvalue < 0.0001 ? '< 0.0001' : regData.f_pvalue.toExponential(2);
+
     const tbody = document.querySelector('#regressionTable tbody');
     tbody.innerHTML = '';
     
@@ -283,8 +314,10 @@ function renderRegression(regData) {
         tr.innerHTML = `
             <td><strong>${FRIENDLY_NAMES[varName] || varName}</strong></td>
             <td>${stats.coefficient.toFixed(4)}</td>
-            <td>${stats.t_stat.toFixed(2)}</td>
+            <td>${stats.std_error.toFixed(4)}</td>
             <td>${stats.p_value.toExponential(2)}</td>
+            <td>${stats.conf_int_lower.toFixed(4)}</td>
+            <td>${stats.conf_int_upper.toFixed(4)}</td>
             <td><span class="${sigClass}">${sigText}</span></td>
         `;
         tbody.appendChild(tr);

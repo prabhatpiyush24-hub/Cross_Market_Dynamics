@@ -34,7 +34,7 @@ def calculate_descriptive_stats(ret_df, window_days=1):
             'skewness': float(stats.skew(s.dropna())),
             'kurtosis': float(stats.kurtosis(s.dropna())),
             # Annualization based on simple scaling for returns
-            'annualized_return': float(s.mean() * annualization_factor),
+            'annualized_mean_return': float(s.mean() * annualization_factor),
             'annualized_volatility': float(s.std() * np.sqrt(annualization_factor)),
             'observations': len(s.dropna()),
             'percentiles': {

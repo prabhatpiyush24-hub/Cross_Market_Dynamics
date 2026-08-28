@@ -29,5 +29,87 @@
         "Brent_Crude",
         "Gold",
         "USD_INR"
-    ]
+    ],
+    "dataset_metadata": {
+        "NIFTY_50": {
+            "ticker": "^NSEI",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "India_VIX": {
+            "ticker": "^INDIAVIX",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "NIFTY_IT": {
+            "ticker": "^CNXIT",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "NIFTY_Bank": {
+            "ticker": "^NSEBANK",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "SP_500": {
+            "ticker": "^GSPC",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "NASDAQ_100": {
+            "ticker": "^NDX",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "US_VIX": {
+            "ticker": "^VIX",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "Brent_Crude": {
+            "ticker": "BZ=F",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "Gold": {
+            "ticker": "GC=F",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        },
+        "USD_INR": {
+            "ticker": "INR=X",
+            "field_used": "Close",
+            "source": "Yahoo Finance",
+            "start_date": "2016-01-05",
+            "end_date": "2026-08-27",
+            "observations": 2607
+        }
+    }
 }

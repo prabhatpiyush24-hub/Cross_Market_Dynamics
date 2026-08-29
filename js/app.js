@@ -218,7 +218,7 @@ function renderHistoricalChart(data) {
     // Use NIFTY dates as the common x-axis
     const labels = data['NIFTY_50'].map(d => d.date);
     
-    const assetsToPlot = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Brent_Crude', 'Gold', 'USD_INR', 'India_VIX'];
+    const assetsToPlot = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'NIFTY_IT', 'NIFTY_Bank', 'Brent_Crude', 'USD_INR', 'India_VIX', 'US_VIX'];
     
     const datasets = assetsToPlot.map(asset => ({
         label: FRIENDLY_NAMES[asset] || asset,

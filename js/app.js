@@ -311,22 +311,31 @@ function renderRegression(regData) {
     for (const [varName, stats] of Object.entries(vars)) {
         if (varName === 'const') continue;
         
-        let sigClass = 'sig-none';
-        let sigText = 'Not Sig.';
-        if (stats.p_value < 0.01) { sigClass = 'sig-high'; sigText = 'High Sig.'; }
-        else if (stats.p_value < 0.05) { sigClass = 'sig-low'; sigText = 'Significant'; }
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    for (const [predictor, stats] of Object.entries(regData.variables)) {
+        if (predictor === 'const') continue;
+        
+        const tr = document.createElement('tr');
+        
+        let sigText = '';
+        let sigClass = '';
+        if (stats.p_value < 0.01) { sigText = 'Highly Significant (***)'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.05) { sigText = 'Significant (**)'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.1) { sigText = 'Weakly Significant (*)'; sigClass = 'neutral'; }
+        else { sigText = 'Not Significant (ns)'; sigClass = 'negative'; }
         
         const displayPval = stats.p_value < 0.0001 ? '< 0.0001' : stats.p_value.toFixed(4);
         
-        const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td><strong>${FRIENDLY_NAMES[varName] || varName}</strong></td>
+            <td><strong>${FRIENDLY_NAMES[predictor] || predictor}</strong></td>
             <td>${stats.coefficient.toFixed(4)}</td>
             <td>${stats.std_error.toFixed(4)}</td>
             <td>${displayPval}</td>
             <td>${stats.conf_int_lower.toFixed(4)}</td>
             <td>${stats.conf_int_upper.toFixed(4)}</td>
-            <td><span class="${sigClass}">${sigText}</span></td>
+            <td class="${sigClass}"><strong>${sigText}</strong></td>
         `;
         tbody.appendChild(tr);
     }
@@ -334,7 +343,8 @@ function renderRegression(regData) {
 
 function renderITAnalysis(regData) {
     document.getElementById('itRegR2').textContent = regData.rsquared.toFixed(4);
-    document.getElementById('itRegFp').textContent = regData.f_pvalue.toExponential(2);
+    const fPval = regData.f_pvalue;
+    document.getElementById('itRegFp').textContent = fPval < 0.0001 ? '< 0.0001' : fPval.toFixed(4);
     document.getElementById('itRegObs').textContent = regData.observations;
     
     const tbody = document.querySelector('#itRegressionTable tbody');
@@ -348,16 +358,18 @@ function renderITAnalysis(regData) {
         
         let sigText = '';
         let sigClass = '';
-        if (stats.p_value < 0.01) { sigText = '***'; sigClass = 'positive'; }
-        else if (stats.p_value < 0.05) { sigText = '**'; sigClass = 'positive'; }
-        else if (stats.p_value < 0.1) { sigText = '*'; sigClass = 'neutral'; }
-        else { sigText = 'ns'; sigClass = 'negative'; }
+        if (stats.p_value < 0.01) { sigText = 'Highly Significant (***)'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.05) { sigText = 'Significant (**)'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.1) { sigText = 'Weakly Significant (*)'; sigClass = 'neutral'; }
+        else { sigText = 'Not Significant (ns)'; sigClass = 'negative'; }
+        
+        const displayPval = stats.p_value < 0.0001 ? '< 0.0001' : stats.p_value.toFixed(4);
         
         tr.innerHTML = `
             <td><strong>${FRIENDLY_NAMES[predictor] || predictor}</strong></td>
             <td>${stats.coefficient.toFixed(4)}</td>
             <td>${stats.std_error.toFixed(4)}</td>
-            <td>${stats.p_value.toFixed(4)}</td>
+            <td>${displayPval}</td>
             <td>${stats.conf_int_lower.toFixed(4)}</td>
             <td>${stats.conf_int_upper.toFixed(4)}</td>
             <td class="${sigClass}"><strong>${sigText}</strong></td>

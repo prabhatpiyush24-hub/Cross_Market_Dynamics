@@ -51,7 +51,9 @@ const ASSET_COLORS = {
     'Brent_Crude': '#f87171', // Bright Red
     'NASDAQ_100': '#a78bfa', // Neon Purple
     'USD_INR': '#f472b6', // Bright Pink
-    'India_VIX': '#94a3b8' // Subtle Grey
+    'India_VIX': '#94a3b8', // Subtle Grey
+    'NIFTY_IT': '#14b8a6', // Teal
+    'NIFTY_Bank': '#f97316' // Orange
 };
 
 const FRIENDLY_NAMES = {
@@ -176,7 +178,7 @@ function renderCorrelationMatrix(data) {
     const table = document.getElementById('corrMatrixTable');
     table.innerHTML = '';
     
-    const assets = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Brent_Crude', 'Gold', 'USD_INR', 'India_VIX'];
+    const assets = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Brent_Crude', 'Gold', 'USD_INR', 'India_VIX', 'NIFTY_IT', 'NIFTY_Bank'];
     
     // Header
     let thead = '<thead><tr><th>Asset</th>';

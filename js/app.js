@@ -369,7 +369,7 @@ function renderStressPeriods(data) {
     if (!container) return;
     container.innerHTML = '';
     
-    data.forEach(period => {
+    data.forEach((period, index) => {
         const card = document.createElement('div');
         card.style.border = "1px solid var(--border-light)";
         card.style.background = "#050505";
@@ -385,6 +385,10 @@ function renderStressPeriods(data) {
             </h3>
             <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.5rem;">${period.description}</p>
             
+            <div class="chart-container" style="height: 300px; margin-bottom: 2rem;">
+                <canvas id="stressChart_${index}"></canvas>
+            </div>
+
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
                 
                 <div>
@@ -395,22 +399,25 @@ function renderStressPeriods(data) {
                                 <th style="padding:0.5rem;">Asset</th>
                                 <th style="padding:0.5rem;">Return</th>
                                 <th style="padding:0.5rem;">Max Drawdown</th>
+                                <th style="padding:0.5rem;">Ann. Volatility</th>
                             </tr>
                         </thead>
                         <tbody>
         `;
         
-        const assets = ['NIFTY_50', 'SP_500', 'Gold', 'Brent_Crude'];
+        const assets = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX'];
         assets.forEach(a => {
             if (period.assets[a]) {
                 const ret = (period.assets[a].cumulative_return * 100).toFixed(1) + '%';
                 const dd = (period.assets[a].max_drawdown * 100).toFixed(1) + '%';
+                const vol = (period.assets[a].annualized_volatility * 100).toFixed(1) + '%';
                 const retClass = period.assets[a].cumulative_return > 0 ? 'positive' : 'negative';
                 html += `
                     <tr>
                         <td style="padding:0.5rem;"><strong>${FRIENDLY_NAMES[a]}</strong></td>
                         <td style="padding:0.5rem;" class="${retClass}">${ret}</td>
                         <td style="padding:0.5rem;" class="negative">${dd}</td>
+                        <td style="padding:0.5rem;">${vol}</td>
                     </tr>
                 `;
             }
@@ -433,7 +440,7 @@ function renderStressPeriods(data) {
                         <tbody>
         `;
         
-        ['SP_500', 'Gold', 'Brent_Crude', 'India_VIX'].forEach(a => {
+        ['SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX'].forEach(a => {
             if (period.correlations_with_nifty[a]) {
                 const corr = period.correlations_with_nifty[a];
                 const corrClass = Math.abs(corr) > 0.5 ? (corr > 0 ? 'positive' : 'negative') : 'neutral';
@@ -455,6 +462,67 @@ function renderStressPeriods(data) {
         
         card.innerHTML = html;
         container.appendChild(card);
+
+        // Render Chart
+        const ctx = document.getElementById(`stressChart_${index}`).getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: period.timeseries.dates,
+                datasets: [
+                    {
+                        label: 'NIFTY 50 (Base 100)',
+                        data: period.timeseries.nifty_normalized,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        yAxisID: 'y',
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'India VIX',
+                        data: period.timeseries.india_vix,
+                        borderColor: '#ef4444',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        yAxisID: 'y1',
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    x: {
+                        grid: { color: '#222', drawBorder: false },
+                        ticks: { color: '#888', maxTicksLimit: 8 }
+                    },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'NIFTY (Base 100)', color: '#f59e0b' },
+                        grid: { color: '#222', drawBorder: false },
+                        ticks: { color: '#888' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'India VIX', color: '#ef4444' },
+                        grid: { drawOnChartArea: false },
+                        ticks: { color: '#888' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#d4d4d4', usePointStyle: true, boxWidth: 8 } },
+                    tooltip: { mode: 'index', intersect: false, backgroundColor: 'rgba(0,0,0,0.8)' }
+                }
+            }
+        });
     });
 }
 

@@ -56,8 +56,19 @@ for name, window in stress_windows.items():
         'end_date': sliced_prices.index.max().strftime('%Y-%m-%d'),
         'description': window['description'],
         'assets': {},
-        'correlations_with_nifty': {}
+        'correlations_with_nifty': {},
+        'timeseries': {
+            'dates': [d.strftime('%Y-%m-%d') for d in sliced_prices.index],
+            'nifty_normalized': [],
+            'india_vix': []
+        }
     }
+    
+    # Generate timeseries for graphing
+    if len(sliced_prices) > 0:
+        base_nifty = sliced_prices['NIFTY_50'].iloc[0]
+        period_stats['timeseries']['nifty_normalized'] = (sliced_prices['NIFTY_50'] / base_nifty * 100).tolist()
+        period_stats['timeseries']['india_vix'] = sliced_prices['India_VIX'].tolist()
     
     # Calculate correlations with NIFTY during this specific window
     if len(sliced_returns) > 2:
@@ -66,10 +77,12 @@ for name, window in stress_windows.items():
                 r, p = stats.pearsonr(sliced_returns['NIFTY_50'], sliced_returns[asset])
                 period_stats['correlations_with_nifty'][asset] = float(r)
     
-    # Calculate Cumulative Return and Max Drawdown
+    # Calculate Cumulative Return, Max Drawdown, and Annualized Volatility
     for asset in assets_to_analyze:
         prices = sliced_prices[asset].dropna()
-        if len(prices) > 0:
+        asset_returns = sliced_returns[asset].dropna()
+        
+        if len(prices) > 0 and len(asset_returns) > 0:
             start_price = prices.iloc[0]
             end_price = prices.iloc[-1]
             cum_ret = (end_price / start_price) - 1
@@ -79,9 +92,13 @@ for name, window in stress_windows.items():
             drawdowns = (prices / rolling_max) - 1
             max_dd = drawdowns.min()
             
+            # Annualized Volatility
+            ann_vol = asset_returns.std() * np.sqrt(252)
+            
             period_stats['assets'][asset] = {
                 'cumulative_return': float(cum_ret),
-                'max_drawdown': float(max_dd)
+                'max_drawdown': float(max_dd),
+                'annualized_volatility': float(ann_vol)
             }
             
     results.append(period_stats)

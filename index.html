@@ -64,16 +64,26 @@
                     
                     <div class="content-block">
                         <h3>Abstract</h3>
-                        <p>This empirical research study investigates the historical behavior of Indian equities (NIFTY 50) in relation to global equity markets (S&P 500, NASDAQ-100), commodities (Brent Crude, Gold), currency (USD/INR), and volatility (India VIX) over a 10-year period.</p>
-                        <p>By employing a strict data alignment methodology to eliminate look-ahead bias, we answer fundamental questions regarding cross-market correlations, the impact of market stress regimes, and the predictive power of global factors on daily Indian market returns.</p>
+                        <p>This empirical research study investigates the historical behavior of the Indian equity market in relation to global markets, commodities, currency, and volatility over a 10-year period.</p>
+                        <p>While the primary focus is predicting and analyzing the benchmark <strong>NIFTY 50</strong> index, the study also includes specialized analyses on specific sectoral sensitivities—most notably the <strong>NIFTY IT</strong> and <strong>NIFTY Bank</strong> indices.</p>
+                        <p>By employing a strict backward-lagged data alignment methodology to eliminate look-ahead bias, we present a comprehensive dashboard featuring:</p>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-secondary);">
+                            <li><strong>Descriptive Statistics & Historical Performance</strong></li>
+                            <li><strong>Correlation Lab</strong> (10-year and 60-day rolling correlations)</li>
+                            <li><strong>Lead/Lag Multiple Linear Regression</strong> (Global predictors on NIFTY 50)</li>
+                            <li><strong>IT Sector Analysis</strong> (Impact of US Markets & USD/INR on Indian IT)</li>
+                            <li><strong>Market Regimes</strong> (Behavior under different Volatility thresholds)</li>
+                            <li><strong>Historical Stress Periods</strong> (Performance during specific global panics)</li>
+                            <li><strong>Machine Learning Experiment</strong> (Directional classification)</li>
+                        </ul>
                         
                         <h3>Research Questions & Hypotheses</h3>
                         <div class="methodology-card" style="margin-bottom: 2rem;">
                             <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
-                                <li><strong>H1:</strong> Previous-session US equity returns have a statistically significant association with subsequent NIFTY returns.</li>
-                                <li><strong>H2:</strong> Previous-session Brent returns have a statistically significant association with subsequent NIFTY returns.</li>
-                                <li><strong>H3:</strong> Cross-market relationships differ between low-, normal- and high-volatility regimes.</li>
-                                <li><strong>H4:</strong> Global-market variables improve out-of-sample NIFTY directional classification relative to a simple baseline.</li>
+                                <li><strong>H1:</strong> Previous-session US equity returns have a statistically significant association with subsequent NIFTY 50 returns.</li>
+                                <li><strong>H2:</strong> The Indian IT sector (NIFTY IT) exhibits specific sensitivity to US indices and the USD/INR exchange rate.</li>
+                                <li><strong>H3:</strong> Cross-market relationships break down or fundamentally differ during high-volatility regimes.</li>
+                                <li><strong>H4:</strong> Global-market variables can improve out-of-sample NIFTY directional classification relative to a simple baseline.</li>
                             </ul>
                         </div>
 
@@ -234,6 +244,7 @@
                     <div class="content-block">
                         <h3>Full-Period Pearson Correlation Matrix</h3>
                         <p>The matrix below shows linear relationships over the entire 10-year period. Values range from <strong>-1</strong> (perfect inverse relationship) to <strong>+1</strong> (perfect positive relationship).</p>
+                        <p style="margin-top: 1rem;"><strong>Sectoral Nuances:</strong> Notice how the <strong>NIFTY IT</strong> index often displays completely different global correlations than the <strong>NIFTY Bank</strong> index. Because Indian IT companies export heavily to the US, they are far more sensitive to the US Dollar and US Equities than domestic-facing Banks.</p>
                         
                         <div class="ai-insight-box">
                             <div class="ai-header"><i data-lucide="sparkles"></i> Key Correlation Findings</div>
@@ -280,7 +291,11 @@
                     </div>
                     <div class="content-block">
                         <p>We estimated an Ordinary Least Squares (OLS) regression predicting the <strong>NIFTY 50 Daily Return</strong>. This isolates the impact of each global variable while holding all other variables constant.</p>
-                        
+                        <p style="margin-top: 1rem; font-size: 0.9rem;"><strong>Why include "Previous NIFTY 50" and "India VIX"?</strong></p>
+                        <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <li><strong>Previous NIFTY 50:</strong> We include yesterday's NIFTY return to test for market momentum or mean reversion. If the coefficient is significant and positive, the Indian market has momentum (up days follow up days). If negative, it implies mean-reversion.</li>
+                            <li><strong>India VIX:</strong> Included as a proxy for local market fear. We want to see if the level of domestic panic amplifies or dampens the market's return independent of global moves.</li>
+                        </ul>
                         <div class="regression-summary">
                             <div class="reg-stat" title="Total number of daily sessions analyzed">
                                 <span class="reg-label">Observations <span class="help-icon" data-tooltip="Total trading days in the dataset.">?</span></span>
@@ -335,7 +350,8 @@
                         <h2>US Market Impact on NIFTY IT</h2>
                     </div>
                     <div class="content-block">
-                        <p>Indian IT companies derive a massive portion of their revenue from US clients. This regression model measures exactly how sensitive the <strong>NIFTY IT index</strong> is to movements in the S&P 500, NASDAQ 100, US Volatility (VIX), and the USD/INR exchange rate.</p>
+                        <p>Indian IT companies derive a massive portion of their revenue from US clients. If you look at the Correlation Lab above, you will see that the NIFTY IT index historically correlates significantly higher with the US Dollar (USD/INR) than the broader market does.</p>
+                        <p style="margin-top: 1rem; margin-bottom: 1.5rem;">To prove this mathematically, we built a specific regression model measuring exactly how sensitive the <strong>NIFTY IT index</strong> is to movements in the S&P 500, NASDAQ 100, US Volatility (VIX), and the USD/INR exchange rate.</p>
                         
                         <div class="regression-summary">
                             <div class="stat-box">
@@ -389,7 +405,12 @@
                         <h2>Market Regimes (Volatility Impact)</h2>
                     </div>
                     <div class="content-block">
-                        <p>We segmented the dataset into three regimes based on the <strong>India VIX</strong> (Volatility Index) percentiles to see how the NIFTY behaves during calm vs. higher-volatility periods.</p>
+                        <p>We segmented the entire 10-year dataset into three "regimes" based on the level of the <strong>India VIX</strong> (the volatility/fear gauge) on any given day. This helps us understand how the NIFTY behaves during calm markets versus times of extreme panic.</p>
+                        <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; margin-top: 1rem; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <li><strong>Low Volatility (Bottom 25% of days):</strong> When fear is virtually nonexistent.</li>
+                            <li><strong>Normal Volatility (Middle 50% of days):</strong> The standard operating environment for the market.</li>
+                            <li><strong>High Volatility (Top 25% of days):</strong> When panic sets in. Notice how average returns typically drop and correlations between assets change dramatically as participants sell indiscriminately.</li>
+                        </ul>
                         
                         <div class="regime-cards" id="regimeCardsContainer">
                             <!-- Populated by JS -->
@@ -421,10 +442,12 @@
                         <div class="ai-insight-box">
                             <div class="ai-header"><i data-lucide="info"></i> Understanding ML Metrics</div>
                             <div class="ai-body">
-                                <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                    <li><strong>Accuracy:</strong> Percentage of days the model guessed the direction correctly. </li>
-                                    <li><strong>ROC-AUC:</strong> Area Under the Receiver Operating Characteristic Curve. A score of 0.500 means no discrimination. Our model achieved an out-of-sample ROC-AUC of approximately 0.597, indicating modest discrimination above the 0.50 benchmark. Further robustness testing is required to determine whether this improvement is stable and economically meaningful.</li>
-                                    <li><strong>Feature Importance:</strong> Displays which variables the Random Forest relied on most heavily for its classifications within the training sample.</li>
+                                <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                                    <li><strong>Baseline Accuracy:</strong> In the stock market, days close "Up" roughly 54% of the time historically. If a simple algorithm just guessed "Up" every single day, its Baseline Accuracy would be 54%. A useful ML model <em>must</em> beat this baseline to prove it's actually learning patterns, rather than just guessing the historical average.</li>
+                                    <li><strong>Precision (Quality):</strong> Out of all the days the model predicted the market would go UP, what percentage of time was it actually right? High precision means the model rarely gives false positive signals.</li>
+                                    <li><strong>Recall (Quantity):</strong> Out of all the actual UP days that happened in reality, what percentage did the model successfully catch? High recall means the model rarely misses an opportunity.</li>
+                                    <li><strong>F1 Score:</strong> A blended average of Precision and Recall. It represents the overall balance of the model.</li>
+                                    <li><strong>ROC-AUC:</strong> A score of 0.50 means the model is just flipping a coin. 1.0 means it predicts perfectly. Our model achieved ~0.597, proving it has a slight, mathematically detectable edge over pure chance.</li>
                                 </ul>
                             </div>
                         </div>

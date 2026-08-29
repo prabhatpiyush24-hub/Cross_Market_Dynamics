@@ -120,8 +120,11 @@ with open(os.path.join(OUTPUT_DIR, 'rolling_correlations.json'), 'w') as f:
 
 # Also save the normalized price series for historical performance charting
 print("Saving Normalized Performance Series...")
-# Normalize to 100 at the start
-df_normalized = (df / df.iloc[0]) * 100
+# 3. Normalized Performance (Base 100)
+print("Computing normalized performance...")
+target_cols = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'NIFTY_IT', 'NIFTY_Bank']
+df_filtered = df[target_cols]
+df_normalized = (df_filtered / df_filtered.iloc[0]) * 100
 # Downsample to weekly for UI charting over 10 years to save payload size
 df_norm_sampled = df_normalized.iloc[::5]
 

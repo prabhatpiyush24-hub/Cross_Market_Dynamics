@@ -57,12 +57,12 @@ const ASSET_COLORS = {
 const FRIENDLY_NAMES = {
     'NIFTY_50': 'NIFTY 50',
     'SP_500': 'S&P 500',
-    'NASDAQ_100': 'NASDAQ-100',
+    'NASDAQ_100': 'NASDAQ 100',
     'Brent_Crude': 'Brent Crude',
     'Gold': 'Gold',
-    'USD_INR': 'USD/INR',
     'India_VIX': 'India VIX',
     'US_VIX': 'US VIX',
+    'USD_INR': 'USD/INR',
     'NIFTY_IT': 'NIFTY IT',
     'NIFTY_Bank': 'NIFTY Bank',
     'Prev_NIFTY_50': 'Previous NIFTY 50',
@@ -94,6 +94,9 @@ async function fetchData() {
         renderHistoricalChart(normPerf);
         renderRollingCorrChart(); // Uses global data
         renderRegression(advResearch.regression_analysis);
+        if (advResearch.nifty_it_regression) {
+            renderITAnalysis(advResearch.nifty_it_regression);
+        }
         renderRegimes(advResearch.regime_analysis);
         renderStressPeriods(stressPeriods);
         renderML(mlResults);
@@ -329,6 +332,40 @@ function renderRegression(regData) {
     }
 }
 
+function renderITAnalysis(regData) {
+    document.getElementById('itRegR2').textContent = regData.rsquared.toFixed(4);
+    document.getElementById('itRegFp').textContent = regData.f_pvalue.toExponential(2);
+    document.getElementById('itRegObs').textContent = regData.observations;
+    
+    const tbody = document.querySelector('#itRegressionTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    for (const [predictor, stats] of Object.entries(regData.variables)) {
+        if (predictor === 'const') continue;
+        
+        const tr = document.createElement('tr');
+        
+        let sigText = '';
+        let sigClass = '';
+        if (stats.p_value < 0.01) { sigText = '***'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.05) { sigText = '**'; sigClass = 'positive'; }
+        else if (stats.p_value < 0.1) { sigText = '*'; sigClass = 'neutral'; }
+        else { sigText = 'ns'; sigClass = 'negative'; }
+        
+        tr.innerHTML = `
+            <td><strong>${FRIENDLY_NAMES[predictor] || predictor}</strong></td>
+            <td>${stats.coefficient.toFixed(4)}</td>
+            <td>${stats.std_error.toFixed(4)}</td>
+            <td>${stats.p_value.toFixed(4)}</td>
+            <td>${stats.conf_int_lower.toFixed(4)}</td>
+            <td>${stats.conf_int_upper.toFixed(4)}</td>
+            <td class="${sigClass}"><strong>${sigText}</strong></td>
+        `;
+        tbody.appendChild(tr);
+    }
+}
+
 function renderRegimes(regimeData) {
     const container = document.getElementById('regimeCardsContainer');
     container.innerHTML = '';
@@ -405,8 +442,8 @@ function renderStressPeriods(data) {
                         <tbody>
         `;
         
-        const assets = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX'];
-        assets.forEach(a => {
+        const allAssets = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX', 'US_VIX', 'NIFTY_IT', 'NIFTY_Bank'];
+        allAssets.forEach(a => {
             if (period.assets[a]) {
                 const ret = (period.assets[a].cumulative_return * 100).toFixed(1) + '%';
                 const dd = (period.assets[a].max_drawdown * 100).toFixed(1) + '%';
@@ -440,7 +477,7 @@ function renderStressPeriods(data) {
                         <tbody>
         `;
         
-        ['SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX'].forEach(a => {
+        ['SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX', 'NIFTY_IT', 'NIFTY_Bank'].forEach(a => {
             if (period.correlations_with_nifty[a]) {
                 const corr = period.correlations_with_nifty[a];
                 const corrClass = Math.abs(corr) > 0.5 ? (corr > 0 ? 'positive' : 'negative') : 'neutral';

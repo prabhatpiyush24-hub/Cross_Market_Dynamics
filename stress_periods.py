@@ -33,7 +33,7 @@ stress_windows = {
     }
 }
 
-assets_to_analyze = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX']
+assets_to_analyze = ['NIFTY_50', 'SP_500', 'NASDAQ_100', 'Gold', 'Brent_Crude', 'USD_INR', 'India_VIX', 'NIFTY_IT', 'NIFTY_Bank']
 
 results = []
 

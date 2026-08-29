@@ -103,6 +103,33 @@ for var in res.params.index:
 
 results['regression_analysis'] = regression_stats
 
+print("3. Running NIFTY IT Regression Analysis...")
+# New Regression: US Impact on NIFTY IT
+y_it = returns['NIFTY_IT']
+X_it = returns[['SP_500', 'NASDAQ_100', 'USD_INR', 'US_VIX']]
+X_it = sm.add_constant(X_it)
+
+model_it = sm.OLS(y_it, X_it).fit()
+
+results['nifty_it_regression'] = {
+    'rsquared': float(model_it.rsquared),
+    'rsquared_adj': float(model_it.rsquared_adj),
+    'f_pvalue': float(model_it.f_pvalue),
+    'observations': int(model_it.nobs),
+    'variables': {}
+}
+
+summary_table_it = model_it.summary2().tables[1]
+for var_name, row in summary_table_it.iterrows():
+    results['nifty_it_regression']['variables'][var_name] = {
+        'coefficient': float(row['Coef.']),
+        'std_error': float(row['Std.Err.']),
+        't_stat': float(row['t']),
+        'p_value': float(row['P>|t|']),
+        'conf_int_lower': float(row['[0.025']),
+        'conf_int_upper': float(row['0.975]'])
+    }
+
 # Save results
 print("Saving Advanced Research results to JSON...")
 with open(os.path.join(OUTPUT_DIR, 'advanced_research.json'), 'w') as f:

@@ -39,6 +39,16 @@
                 "cumulative_return": 4.134807097948743,
                 "max_drawdown": -0.07738098031358931,
                 "annualized_volatility": 1.850733610844528
+            },
+            "NIFTY_IT": {
+                "cumulative_return": -0.33345657419138475,
+                "max_drawdown": -0.33345657419138475,
+                "annualized_volatility": 0.6507318425743828
+            },
+            "NIFTY_Bank": {
+                "cumulative_return": -0.45140602549602016,
+                "max_drawdown": -0.45326142153206983,
+                "annualized_volatility": 0.7361697023955989
             }
         },
         "correlations_with_nifty": {
@@ -47,7 +57,9 @@
             "Gold": 0.055762027028628966,
             "Brent_Crude": 0.29052087239350605,
             "USD_INR": 0.1517346222077012,
-            "India_VIX": -0.413271918003612
+            "India_VIX": -0.413271918003612,
+            "NIFTY_IT": 0.9248411185622809,
+            "NIFTY_Bank": 0.9557018678506133
         },
         "timeseries": {
             "dates": [
@@ -164,6 +176,16 @@
                 "cumulative_return": 0.22674768202076456,
                 "max_drawdown": -0.4824890721088727,
                 "annualized_volatility": 0.9343971188659884
+            },
+            "NIFTY_IT": {
+                "cumulative_return": -0.29212781382176944,
+                "max_drawdown": -0.32729795188938793,
+                "annualized_volatility": 0.2603783083681541
+            },
+            "NIFTY_Bank": {
+                "cumulative_return": 0.07403931274237441,
+                "max_drawdown": -0.17069196367161676,
+                "annualized_volatility": 0.22966603305084585
             }
         },
         "correlations_with_nifty": {
@@ -172,7 +194,9 @@
             "Gold": 0.028049362618822394,
             "Brent_Crude": -0.0543111156797093,
             "USD_INR": -0.0680933015013208,
-            "India_VIX": -0.757104171841294
+            "India_VIX": -0.757104171841294,
+            "NIFTY_IT": 0.7568887332627913,
+            "NIFTY_Bank": 0.8985795532819322
         },
         "timeseries": {
             "dates": [
@@ -802,6 +826,16 @@
                 "cumulative_return": -0.064726849329653,
                 "max_drawdown": -0.32911987292915146,
                 "annualized_volatility": 0.9349231561545117
+            },
+            "NIFTY_IT": {
+                "cumulative_return": -0.12124695667446417,
+                "max_drawdown": -0.14894903403212223,
+                "annualized_volatility": 0.25926982847620034
+            },
+            "NIFTY_Bank": {
+                "cumulative_return": 0.053130052596473076,
+                "max_drawdown": -0.045666880047847025,
+                "annualized_volatility": 0.1774122821367553
             }
         },
         "correlations_with_nifty": {
@@ -810,7 +844,9 @@
             "Gold": 0.2590902363294283,
             "Brent_Crude": -0.09596399028022783,
             "USD_INR": 0.01203608358866903,
-            "India_VIX": -0.5928290414732084
+            "India_VIX": -0.5928290414732084,
+            "NIFTY_IT": 0.4745255267100164,
+            "NIFTY_Bank": 0.9031717618330442
         },
         "timeseries": {
             "dates": [

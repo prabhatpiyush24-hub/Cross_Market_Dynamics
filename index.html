@@ -26,6 +26,7 @@
                 <a href="#descriptive" class="nav-item"><i data-lucide="bar-chart"></i> Descriptive Statistics</a>
                 <a href="#correlation" class="nav-item"><i data-lucide="git-merge"></i> Correlation Lab</a>
                 <a href="#regression" class="nav-item"><i data-lucide="trending-up"></i> Lead/Lag Regression</a>
+                <a href="#it-analysis" class="nav-item"><i data-lucide="monitor"></i> IT Sector Analysis</a>
                 <a href="#regimes" class="nav-item"><i data-lucide="alert-triangle"></i> Market Regimes</a>
                 <a href="#stress" class="nav-item"><i data-lucide="alert-octagon"></i> Stress Periods</a>
                 <a href="#ml" class="nav-item"><i data-lucide="cpu"></i> Machine Learning</a>
@@ -324,6 +325,50 @@
                                     <li><strong>Commodities:</strong> We test the historical relationship between Brent crude returns and subsequent NIFTY returns, and whether gold exhibits defensive or inverse behaviour. In this specification, their coefficients are relatively small compared to their standard errors.</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- IT Sector Analysis -->
+                <section id="it-analysis" class="research-section">
+                    <div class="section-heading">
+                        <h2>US Market Impact on NIFTY IT</h2>
+                    </div>
+                    <div class="content-block">
+                        <p>Indian IT companies derive a massive portion of their revenue from US clients. This regression model measures exactly how sensitive the <strong>NIFTY IT index</strong> is to movements in the S&P 500, NASDAQ 100, US Volatility (VIX), and the USD/INR exchange rate.</p>
+                        
+                        <div class="regression-summary">
+                            <div class="stat-box">
+                                <span class="label">R-Squared</span>
+                                <span class="value" id="itRegR2">-</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="label">F-Statistic P-Value</span>
+                                <span class="value" id="itRegFp">-</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="label">Observations</span>
+                                <span class="value" id="itRegObs">-</span>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="research-table" id="itRegressionTable">
+                                <thead>
+                                    <tr>
+                                        <th>Predictor (US Variables)</th>
+                                        <th>Coefficient <span class="help-icon" data-tooltip="Estimated change in NIFTY IT associated with a 1 unit increase in predictor.">?</span></th>
+                                        <th>Std Error</th>
+                                        <th>P-Value</th>
+                                        <th>95% CI Lower</th>
+                                        <th>95% CI Upper</th>
+                                        <th>Significance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>

@@ -1,0 +1,134 @@
+[
+    {
+        "name": "COVID-19 Crash",
+        "start_date": "2020-02-19",
+        "end_date": "2020-03-23",
+        "description": "The fastest global equity crash in history.",
+        "assets": {
+            "NIFTY_50": {
+                "cumulative_return": -0.37239712063907626,
+                "max_drawdown": -0.37239712063907626
+            },
+            "SP_500": {
+                "cumulative_return": -0.31610636023594274,
+                "max_drawdown": -0.3193095437742931
+            },
+            "NASDAQ_100": {
+                "cumulative_return": -0.2736827160562686,
+                "max_drawdown": -0.2803288390852875
+            },
+            "Gold": {
+                "cumulative_return": -0.07250000000000001,
+                "max_drawdown": -0.11665867779109373
+            },
+            "Brent_Crude": {
+                "cumulative_return": -0.5328138607404964,
+                "max_drawdown": -0.579161035008946
+            },
+            "USD_INR": {
+                "cumulative_return": 0.05340636248404329,
+                "max_drawdown": -0.018539225319618935
+            },
+            "India_VIX": {
+                "cumulative_return": 4.134807097948743,
+                "max_drawdown": -0.07738098031358931
+            }
+        },
+        "correlations_with_nifty": {
+            "SP_500": -0.04495589586718228,
+            "NASDAQ_100": -0.03332808482446459,
+            "Gold": 0.055762027028628966,
+            "Brent_Crude": 0.29052087239350605,
+            "USD_INR": 0.1517346222077012,
+            "India_VIX": -0.413271918003612
+        }
+    },
+    {
+        "name": "2022 Bear Market (Rate Hikes)",
+        "start_date": "2022-01-03",
+        "end_date": "2022-10-12",
+        "description": "Prolonged global selloff driven by aggressive central bank tightening and inflation fears.",
+        "assets": {
+            "NIFTY_50": {
+                "cumulative_return": -0.028486790971723464,
+                "max_drawdown": -0.16465934060306942
+            },
+            "SP_500": {
+                "cumulative_return": -0.24701963511013114,
+                "max_drawdown": -0.2524600811026375
+            },
+            "NASDAQ_100": {
+                "cumulative_return": -0.3387685870586238,
+                "max_drawdown": -0.3460489440881459
+            },
+            "Gold": {
+                "cumulative_return": -0.08142273533686728,
+                "max_drawdown": -0.2043036771460689
+            },
+            "Brent_Crude": {
+                "cumulative_return": 0.21226539464314098,
+                "max_drawdown": -0.34317865796461855
+            },
+            "USD_INR": {
+                "cumulative_return": 0.10734076778169732,
+                "max_drawdown": -0.021147990203040923
+            },
+            "India_VIX": {
+                "cumulative_return": 0.22674768202076456,
+                "max_drawdown": -0.4824890721088727
+            }
+        },
+        "correlations_with_nifty": {
+            "SP_500": 0.40859265405510065,
+            "NASDAQ_100": 0.4148571805906161,
+            "Gold": 0.028049362618822394,
+            "Brent_Crude": -0.0543111156797093,
+            "USD_INR": -0.0680933015013208,
+            "India_VIX": -0.757104171841294
+        }
+    },
+    {
+        "name": "Late 2018 Selloff",
+        "start_date": "2018-10-01",
+        "end_date": "2018-12-24",
+        "description": "Sharp market correction driven by US-China trade war fears and slowing global growth.",
+        "assets": {
+            "NIFTY_50": {
+                "cumulative_return": -0.031321803621362054,
+                "max_drawdown": -0.08886929153863754
+            },
+            "SP_500": {
+                "cumulative_return": -0.17068060405866048,
+                "max_drawdown": -0.17394912028309706
+            },
+            "NASDAQ_100": {
+                "cumulative_return": -0.20728400804868852,
+                "max_drawdown": -0.20829913735018424
+            },
+            "Gold": {
+                "cumulative_return": 0.0522870741318715,
+                "max_drawdown": -0.02977350228812703
+            },
+            "Brent_Crude": {
+                "cumulative_return": -0.34937138659816447,
+                "max_drawdown": -0.37628926731023304
+            },
+            "USD_INR": {
+                "cumulative_return": -0.036326168709294615,
+                "max_drawdown": -0.0648793088054771
+            },
+            "India_VIX": {
+                "cumulative_return": -0.064726849329653,
+                "max_drawdown": -0.32911987292915146
+            }
+        },
+        "correlations_with_nifty": {
+            "SP_500": 0.23708224432583178,
+            "NASDAQ_100": 0.29152919953440787,
+            "Gold": 0.2590902363294283,
+            "Brent_Crude": -0.09596399028022783,
+            "USD_INR": 0.01203608358866903,
+            "India_VIX": -0.5928290414732084
+        }
+    }
+]

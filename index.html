@@ -27,6 +27,7 @@
                 <a href="#correlation" class="nav-item"><i data-lucide="git-merge"></i> Correlation Lab</a>
                 <a href="#regression" class="nav-item"><i data-lucide="trending-up"></i> Lead/Lag Regression</a>
                 <a href="#regimes" class="nav-item"><i data-lucide="alert-triangle"></i> Market Regimes</a>
+                <a href="#stress" class="nav-item"><i data-lucide="alert-octagon"></i> Stress Periods</a>
                 <a href="#ml" class="nav-item"><i data-lucide="cpu"></i> Machine Learning</a>
             </nav>
             <div class="sidebar-info">
@@ -336,6 +337,19 @@
                         <p>We segmented the dataset into three regimes based on the <strong>India VIX</strong> (Volatility Index) percentiles to see how the NIFTY behaves during calm vs. higher-volatility periods.</p>
                         
                         <div class="regime-cards" id="regimeCardsContainer">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Historical Stress Periods -->
+                <section id="stress" class="research-section">
+                    <div class="section-heading">
+                        <h2>Historical Stress Periods</h2>
+                    </div>
+                    <div class="content-block">
+                        <p>An analysis of how cross-market relationships and drawdowns behave during specific, highly volatile historical regimes.</p>
+                        <div id="stressPeriodsContainer" style="display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem;">
                             <!-- Populated by JS -->
                         </div>
                     </div>

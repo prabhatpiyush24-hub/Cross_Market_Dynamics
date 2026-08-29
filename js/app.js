@@ -74,14 +74,15 @@ let rollingCorrChartInstance = null;
 
 async function fetchData() {
     try {
-        const [descStats, corrData, rollCorr, normPerf, advResearch, mlResults, alignSummary] = await Promise.all([
+        const [descStats, corrData, rollCorr, normPerf, advResearch, mlResults, alignSummary, stressPeriods] = await Promise.all([
             fetch('/data/stats/descriptive_stats.json').then(r => r.json()),
             fetch('/data/stats/correlation_matrix.json').then(r => r.json()),
             fetch('/data/stats/rolling_correlations.json').then(r => r.json()),
             fetch('/data/stats/normalized_performance.json').then(r => r.json()),
             fetch('/data/stats/advanced_research.json').then(r => r.json()),
             fetch('/data/stats/ml_results.json').then(r => r.json()),
-            fetch('/data/final/alignment_summary.json').then(r => r.json())
+            fetch('/data/final/alignment_summary.json').then(r => r.json()),
+            fetch('/data/stats/stress_periods.json').then(r => r.json())
         ]);
         
         globalRollingCorrData = rollCorr;
@@ -94,6 +95,7 @@ async function fetchData() {
         renderRollingCorrChart(); // Uses global data
         renderRegression(advResearch.regression_analysis);
         renderRegimes(advResearch.regime_analysis);
+        renderStressPeriods(stressPeriods);
         renderML(mlResults);
         
         setupEventListeners();
@@ -358,6 +360,100 @@ function renderRegimes(regimeData) {
                 <span>${corrSp}</span>
             </div>
         `;
+        container.appendChild(card);
+    });
+}
+
+function renderStressPeriods(data) {
+    const container = document.getElementById('stressPeriodsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    data.forEach(period => {
+        const card = document.createElement('div');
+        card.style.border = "1px solid var(--border-light)";
+        card.style.background = "#050505";
+        card.style.padding = "1.5rem";
+        
+        const start = new Date(period.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        const end = new Date(period.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        
+        let html = `
+            <h3 style="margin-top:0; border-bottom: 1px dashed var(--border-light); padding-bottom: 0.75rem; display:flex; justify-content:space-between; align-items:center;">
+                ${period.name} 
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">${start} – ${end}</span>
+            </h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.5rem;">${period.description}</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                
+                <div>
+                    <h4 style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem; letter-spacing:0.05em;">Asset Performance</h4>
+                    <table class="research-table" style="width:100%; font-size:0.8rem;">
+                        <thead>
+                            <tr>
+                                <th style="padding:0.5rem;">Asset</th>
+                                <th style="padding:0.5rem;">Return</th>
+                                <th style="padding:0.5rem;">Max Drawdown</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        const assets = ['NIFTY_50', 'SP_500', 'Gold', 'Brent_Crude'];
+        assets.forEach(a => {
+            if (period.assets[a]) {
+                const ret = (period.assets[a].cumulative_return * 100).toFixed(1) + '%';
+                const dd = (period.assets[a].max_drawdown * 100).toFixed(1) + '%';
+                const retClass = period.assets[a].cumulative_return > 0 ? 'positive' : 'negative';
+                html += `
+                    <tr>
+                        <td style="padding:0.5rem;"><strong>${FRIENDLY_NAMES[a]}</strong></td>
+                        <td style="padding:0.5rem;" class="${retClass}">${ret}</td>
+                        <td style="padding:0.5rem;" class="negative">${dd}</td>
+                    </tr>
+                `;
+            }
+        });
+        
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <h4 style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem; letter-spacing:0.05em;">Correlation with NIFTY 50</h4>
+                    <table class="research-table" style="width:100%; font-size:0.8rem;">
+                        <thead>
+                            <tr>
+                                <th style="padding:0.5rem;">Asset</th>
+                                <th style="padding:0.5rem;">Local Correlation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        ['SP_500', 'Gold', 'Brent_Crude', 'India_VIX'].forEach(a => {
+            if (period.correlations_with_nifty[a]) {
+                const corr = period.correlations_with_nifty[a];
+                const corrClass = Math.abs(corr) > 0.5 ? (corr > 0 ? 'positive' : 'negative') : 'neutral';
+                html += `
+                    <tr>
+                        <td style="padding:0.5rem;"><strong>${FRIENDLY_NAMES[a]}</strong></td>
+                        <td style="padding:0.5rem;" class="${corrClass}">${corr.toFixed(2)}</td>
+                    </tr>
+                `;
+            }
+        });
+        
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+        
+        card.innerHTML = html;
         container.appendChild(card);
     });
 }

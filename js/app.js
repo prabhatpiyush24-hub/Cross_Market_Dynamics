@@ -299,10 +299,10 @@ function renderRollingCorrChart() {
 }
 
 function renderRegression(regData) {
-    document.getElementById('regObs').textContent = regData.observations.toLocaleString();
-    document.getElementById('regR2').textContent = regData.rsquared.toFixed(4);
+    document.getElementById('reg-obs').textContent = regData.observations.toLocaleString();
+    document.getElementById('reg-rsq').textContent = regData.rsquared.toFixed(4);
     const fPval = regData.f_pvalue;
-    document.getElementById('regFp').textContent = fPval < 0.0001 ? '< 0.0001' : fPval.toFixed(4);
+    document.getElementById('reg-pval').textContent = fPval < 0.0001 ? '< 0.0001' : fPval.toFixed(4);
 
     const tbody = document.querySelector('#regressionTable tbody');
     if (!tbody) return;
